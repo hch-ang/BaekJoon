@@ -3,6 +3,7 @@ package bj1707;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -11,9 +12,7 @@ import java.util.StringTokenizer;
 public class Main {
 	static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 	static int K, N, M;
-//	static LinkedList <Integer>[] arr = new LinkedList[20001];
-	static int arr[][] = new int[20001][20000];
-	static int index[] = new int[20001];
+	static List <Integer>[] arr = new ArrayList[20001];
 	static int[] sig = new int[20001];
 	static Queue<Integer> Q = new LinkedList<Integer>();
 	static StringBuilder sb = new StringBuilder();
@@ -24,8 +23,7 @@ public class Main {
 			N = Integer.parseInt(st.nextToken());
 			M = Integer.parseInt(st.nextToken());
 			for(int i = 1; i <= N; i++) {
-//				arr[i] = new LinkedList<Integer>();
-				index[i] = 0;
+				arr[i] = new ArrayList<Integer>();
 				sig[i] = 0;
 			}
 			int fr, to;
@@ -33,10 +31,8 @@ public class Main {
 				st = new StringTokenizer(in.readLine());
 				fr = Integer.parseInt(st.nextToken());
 				to = Integer.parseInt(st.nextToken());
-//				arr[fr].add(to);
-//				arr[to].add(fr);
-				arr[fr][index[fr]++] = to;
-				arr[to][index[to]++] = fr;
+				arr[fr].add(to);
+				arr[to].add(fr);
 			}
 
 			Q.clear();
@@ -53,9 +49,9 @@ public class Main {
 							break;
 						cur = Q.poll();
 						cursig = sig[cur];
-						len = index[cur];
+						len = arr[cur].size();
 						for(int j = 0; j < len; j++) {
-							next = arr[cur][j];
+							next = arr[cur].get(j);
 							if(sig[next] == cursig) {
 								flag = false;
 								break;
@@ -73,6 +69,6 @@ public class Main {
 			else
 				sb.append("NO\n");
 		}
-		System.out.print(sb.toString());
+		System.out.println(sb.toString());
 	}
 }
